@@ -24,7 +24,7 @@ public class Word {
 
     private void hasOnlyValidLetters(String word) {
         if (! word.matches("[a-zA-Z]*"))
-            throw new IllegalArgumentException("word contain invalid letters");
+            throw new IllegalArgumentException("word contains invalid letters");
     }
 
     private void hasACorrectLength(String word) {
