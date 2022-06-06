@@ -28,12 +28,12 @@ public class WordleData {
 
     List<Integer> getCorrectPosition(List<Character> characters) {
         Word guess = new Word(characters);
-        return guess.matchesCorrectPositionWith(getWordOfTheDay());
+        return guess.matchesCorrectPositionsWith(getWordOfTheDay());
     }
 
     List<Integer> getIncorrectPosition(List<Character> characters) {
         Word guess = new Word(characters);
-        return guess.matchesIncorrectPositionWith(getWordOfTheDay());
+        return guess.matchesIncorrectPositionsWith(getWordOfTheDay());
     }
 
     List<Integer> getWrongLetterPosition(List<Character> characters) {
