@@ -67,7 +67,6 @@ class GameTest {
         assertThat(game.hasWon()).isFalse();
         game.addtry(new Word("happy"));
         assertThat(game.hasWon()).isTrue();
-
     }
 
     @Test
