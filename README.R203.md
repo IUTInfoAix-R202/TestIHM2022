@@ -38,7 +38,7 @@ La logique du jeu Wordle reposera principalement sur les trois classes suivantes
 
 - La classe `Word` qui permet de matérialiser un mot ainsi que toutes les fonctionnalités associées.
 - La classe `Dictionary` qui permettra de disposer d'un dictionnaire pour reconnaitre les mots valides que les joueurs auront le droit d'utiliser.
-- La classe `Game` qui s'occupe de mémoriser l'ensemble des essais d'un joueur et de determiner s'il a gagne ou perdu.
+- La classe `Game` qui s'occupe de mémoriser l'ensemble des essais d'un joueur et de determiner s'il a gagné ou perdu.
 
 Votre travail dans la suite de ce sujet sera d'écrire pas à pas les classes ci-dessus.
 
@@ -84,36 +84,34 @@ void testThatTooManyWordLettersShouldRaiseException() {
     ```java
     private void hasOnlyValidLetters(String word) {
         if (! word.matches("[a-zA-Z]*"))
-            throw new IllegalArgumentException("word contain invalid letters");
+            throw new IllegalArgumentException("word contains invalid letters");
     }
     ```
-4. Écrire la méthode `List<Integer> matchesCorrectPositionWith(Word)` qui permet de connaitre les lettres bien placées dans un mot. Le mot passé en paramètre est le mot à deviner. Les tests suivants, vous montre plusieurs exemples d'utilisation de cette méthode :
+4. Écrire la méthode `List<Integer> matchesCorrectPositionsWith(Word)` qui identifie les lettres bien placées dans un mot. Le mot passé en paramètre est le mot à deviner. Les tests suivants, vous montrent plusieurs exemples d'utilisation de cette méthode :
 ```java
 @Test
 public void testThatTwoWordHasNoMatch() {
    Word firstWord = new Word("trees");
    Word secondWord = new Word("valid");
-   assertThat(firstWord.matchesCorrectPositionWith(secondWord)).isEqualTo(List.of());
+   assertThat(firstWord.matchesCorrectPositionsWith(secondWord)).isEqualTo(List.of());
 }
 @Test
 public void testThatMatchesFirstLetter() {
     Word firstWord = new Word("trees");
     Word secondWord = new Word("table");
-
-    assertThat(firstWord.matchesCorrectPositionWith(secondWord)).isEqualTo(List.of(0));
+    assertThat(firstWord.matchesCorrectPositionsWith(secondWord)).isEqualTo(List.of(0));
 }
 @Test
 public void testThatMatchesAllLetters() {
     Word firstWord = new Word("trees");
     Word secondWord = new Word("trees");
-
-    assertThat(firstWord.matchesCorrectPositionWith(secondWord)).isEqualTo(List.of(0, 1, 2, 3, 4));
+    assertThat(firstWord.matchesCorrectPositionsWith(secondWord)).isEqualTo(List.of(0, 1, 2, 3, 4));
 }
 ```
-5. En supposant disposer de la méthode qui recherche les lettres mal placées `List<Integer>  matchesIncorrectPositionWith(Word)`, écrire la méthode de test qui compare le mot ""alarm" avec le mot "drama".
+5. En supposant disposer de la méthode qui identifie les lettres présentes mais mal placées `List<Integer>  matchesIncorrectPositionsWith(Word)`, écrire le test qui compare le mot "alarm" avec le mot "drama".
 
 ### Exercice 2 - Implémentation de la classe `Dictionary`
-Le dictionnaire permet de reconnaitre un mot valide. Si un utilisateur propose un mot qui n'existe pas dans le dictionnaire, le mot ne devra pas être accepté par le jeu.
+Le dictionnaire permet de reconnaître un mot valide. Si un utilisateur propose un mot qui n'existe pas dans le dictionnaire, le mot ne devra pas être accepté par le jeu.
 
 1. Écrire la déclaration minimale de la classe `Dictionary` permettant de faire passer les tests unitaires suivants :
 ```java
@@ -130,7 +128,7 @@ void testThatSingleDictionaryReturns1AsCount() {
 }
 ```
 
-2. Écrire la méthode `includesWord` qui vérifie si un mot est contenu dans le dictionnaire. Cette méthode doit valider les tests suivants.
+2. Écrire la méthode `includesWord(Word)` qui vérifie si un mot est contenu dans le dictionnaire. Cette méthode doit valider les tests suivants :
 ```java
 @Test
 void testThatDictionaryDoesNotIncludeWord() {
@@ -144,7 +142,7 @@ void testThatDictionaryIncludesWord() {
     assertThat(dictionary.includesWord(new Word("happy"))).isTrue();
 }
 ```
-3. Jusqu'à présent, les dictionnaires utilisés n'avaient qu'un seul mot. Pour gérer les dictionnaires de taille arbitraires, le constructeur suivant est ajouté : 
+3. Jusqu'à présent, les dictionnaires utilisés n'avaient qu'un seul mot. Pour gérer les dictionnaires de taille arbitraire, le constructeur suivant est ajouté : 
 ```java
 public Dictionary(Word... words) {
     this.words = words;
@@ -155,7 +153,7 @@ public Dictionary(Word... words) {
 ### Exercice 3 - Implémentation de la classe `Game`
 La classe `Game` permet de matérialiser une partie du jeu Wordle. Elle a donc la responsabilité de vérifier le respect des règles du jeu.
 
-1. Écrire la déclaration de la classe `Game` dispose des données membres suivantes :
+1. Écrire la déclaration de la classe `Game` qui dispose des données membres suivantes :
  - `wordsTried` du type `List<Word>` est une liste des mots essayés par le joueur.
  - `dictionary` du type `Dictionary` est le dictionnaire utilisé pour valider les mots proposés.
  - `winnerWord` du type `Word` est le mot recherché par le joueur.
@@ -164,7 +162,7 @@ La classe `Game` permet de matérialiser une partie du jeu Wordle. Elle a donc l
 @Test
 void testWinnerWordNotInDictionary() {
     Dictionary dictionary = new Dictionary(new Word("happy"));
-    Word winnerWord = new Word("heros");
+    Word winnerWord = new Word("angry");
     assertThatThrownBy(() -> new Game(dictionary, winnerWord)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Winner word must be in dictionary");
 }
 ```
@@ -204,5 +202,4 @@ void testThatGuessesWord() {
 ```
 
  
-
 
