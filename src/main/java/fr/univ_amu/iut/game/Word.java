@@ -59,16 +59,22 @@ public class Word {
         return letters;
     }
 
-    public List<Integer> matchesPositionWith(Word word) {
-        return IntStream.range(0, Math.min(this.letters.length(), word.letters.length()))
+    public List<Integer> matchesCorrectPositionWith(Word word) {
+        return IntStream.range(0, 5)
                 .filter(i -> this.letters.charAt(i) == word.letters.charAt(i)).boxed().collect(Collectors.toList());
     }
 
     public List<Integer> matchesIncorrectPositionWith(Word word) {
         List<Integer> matchesIncorrectPosition =
-                IntStream.range(0, Math.min(this.letters.length(), word.letters.length()))
+                IntStream.range(0, 5)
                         .filter(i -> word.letters.indexOf(this.letters.charAt(i)) != - 1).boxed().collect(Collectors.toList());
-        matchesIncorrectPosition.removeAll(matchesPositionWith(word));
+        matchesIncorrectPosition.removeAll(matchesCorrectPositionWith(word));
         return matchesIncorrectPosition;
+    }
+    public List<Integer> matchesWrongLetterPositionWith(Word word){
+        List<Integer> matchesWrongLetterPosition = IntStream.range(0, 5).boxed().collect(Collectors.toList());
+        matchesWrongLetterPosition.removeAll(matchesCorrectPositionWith(word));
+        matchesWrongLetterPosition.removeAll(matchesIncorrectPositionWith(word));
+        return matchesWrongLetterPosition;
     }
 }

@@ -1,5 +1,6 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.game.LetterStatus;
 import javafx.beans.binding.Bindings;
 import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
@@ -89,7 +90,7 @@ public class ViewBuilder implements Builder<Region> {
                 if (letterModel.status.get() == LetterStatus.UNLOCKED) {
                     WordleAnimation.flashTile(stackPane);
                 }
-                LetterStatus.updatePseudoClass(stackPane, letterModel.status.get());
+                LetterStatusPseudoClass.updatePseudoClass(stackPane, letterModel.status.get());
             }
         });
         return stackPane;

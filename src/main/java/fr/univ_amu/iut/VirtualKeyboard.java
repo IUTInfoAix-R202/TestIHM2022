@@ -1,5 +1,6 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.game.LetterStatus;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -69,7 +70,7 @@ public class VirtualKeyboard extends VBox {
         Button button = createButton("" + letter);
         button.setOnMouseClicked(event -> keystrokeConsumer.accept(letter));
         if (alphabet.get(letter) != null) {
-            LetterStatus.addPseudoClass(button, alphabet.get(letter));
+            LetterStatusPseudoClass.addPseudoClass(button, alphabet.get(letter));
         }
         return button;
     }

@@ -1,5 +1,7 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.game.LetterStatus;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -46,6 +48,7 @@ public class WordleInteractor {
         data.getCorrectPosition(guessedCharacters).stream().map(guess::get).forEach(letterModel -> letterModel.status.set(LetterStatus.CORRECT));
         data.getIncorrectPosition(guessedCharacters).stream().map(guess::get).forEach(letterModel -> letterModel.status.set(LetterStatus.PRESENT));
         data.getWrongLetterPosition(guessedCharacters).stream().map(guess::get).forEach(letterModel -> letterModel.status.set(LetterStatus.WRONG));
+        model.wordGuessed.set(data.getCorrectPosition(guessedCharacters).size() == 5);
     }
 
     private void setAlphabet() {

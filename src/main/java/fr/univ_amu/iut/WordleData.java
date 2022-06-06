@@ -29,7 +29,7 @@ public class WordleData {
 
     List<Integer> getCorrectPosition(List<Character> characters) {
         Word guess = new Word(characters);
-        return guess.matchesPositionWith(getWordOfTheDay());
+        return guess.matchesCorrectPositionWith(getWordOfTheDay());
     }
 
     List<Integer> getIncorrectPosition(List<Character> characters) {
@@ -38,7 +38,8 @@ public class WordleData {
     }
 
     List<Integer> getWrongLetterPosition(List<Character> characters) {
-        return IntStream.range(0, 5).filter(value -> ! getCorrectPosition(characters).contains(value)).filter(value -> ! getIncorrectPosition(characters).contains(value)).boxed().toList();
+        Word guess = new Word(characters);
+        return guess.matchesWrongLetterPositionWith(getWordOfTheDay());
     }
 
     public boolean isWordValid(List<Character> characters) {

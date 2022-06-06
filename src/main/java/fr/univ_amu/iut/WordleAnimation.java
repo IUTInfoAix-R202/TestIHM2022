@@ -1,5 +1,6 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.game.LetterStatus;
 import javafx.animation.*;
 import javafx.scene.Node;
 import javafx.scene.transform.Rotate;
@@ -15,7 +16,7 @@ public class WordleAnimation {
         RotateTransition rotateIn = new RotateTransition(Duration.millis(speed), node);
         rotateIn.setByAngle(90.0);
         rotateIn.setAxis(Rotate.X_AXIS);
-        rotateIn.setOnFinished(event -> LetterStatus.updatePseudoClass(node, letterStatus));
+        rotateIn.setOnFinished(event -> LetterStatusPseudoClass.updatePseudoClass(node, letterStatus));
 
         RotateTransition rotateOut = new RotateTransition(Duration.millis(speed), node);
         rotateOut.setByAngle(- 90.0);

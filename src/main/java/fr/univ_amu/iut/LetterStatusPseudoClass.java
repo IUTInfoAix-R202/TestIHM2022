@@ -1,12 +1,11 @@
 package fr.univ_amu.iut;
 
+import fr.univ_amu.iut.game.LetterStatus;
 import javafx.beans.property.ObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
 
-public enum LetterStatus {
-    EMPTY, UNLOCKED, WRONG, PRESENT, CORRECT;
-
+public class LetterStatusPseudoClass {
     private static final PseudoClass emptyPseudoClass = PseudoClass.getPseudoClass("empty");
     private static final PseudoClass unlockedPseudoClass = PseudoClass.getPseudoClass("unlocked");
     private static final PseudoClass wrongPseudoClass = PseudoClass.getPseudoClass("wrong");
