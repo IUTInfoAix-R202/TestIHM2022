@@ -68,7 +68,7 @@ class WordTest {
 
         assertThat(firstWord.matchesCorrectPositionWith(secondWord)).isEqualTo(List.of());
         assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of());
-        assertThat(firstWord.matchesWrongLetterPositionWith(secondWord)).isEqualTo(List.of(0,1,2,3,4));
+        assertThat(firstWord.matchesWrongLetterPositionWith(secondWord)).isEqualTo(List.of(0, 1, 2, 3, 4));
     }
 
     @Test
@@ -77,8 +77,8 @@ class WordTest {
         Word secondWord = new Word("table");
 
         assertThat(firstWord.matchesCorrectPositionWith(secondWord)).isEqualTo(List.of(0));
-        assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of(2,3));
-        assertThat(firstWord.matchesWrongLetterPositionWith(secondWord)).isEqualTo(List.of(1,4));
+        assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of(2, 3));
+        assertThat(firstWord.matchesWrongLetterPositionWith(secondWord)).isEqualTo(List.of(1, 4));
     }
 
     @Test
@@ -98,7 +98,7 @@ class WordTest {
 
         assertThat(firstWord.matchesCorrectPositionWith(secondWord)).isEqualTo(List.of(1));
         assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of());
-        assertThat(firstWord.matchesWrongLetterPositionWith(secondWord)).isEqualTo(List.of(0,2,3,4));
+        assertThat(firstWord.matchesWrongLetterPositionWith(secondWord)).isEqualTo(List.of(0, 2, 3, 4));
 
     }
 

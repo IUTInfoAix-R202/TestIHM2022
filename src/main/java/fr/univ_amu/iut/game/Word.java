@@ -71,7 +71,8 @@ public class Word {
         matchesIncorrectPosition.removeAll(matchesCorrectPositionWith(word));
         return matchesIncorrectPosition;
     }
-    public List<Integer> matchesWrongLetterPositionWith(Word word){
+
+    public List<Integer> matchesWrongLetterPositionWith(Word word) {
         List<Integer> matchesWrongLetterPosition = IntStream.range(0, 5).boxed().collect(Collectors.toList());
         matchesWrongLetterPosition.removeAll(matchesCorrectPositionWith(word));
         matchesWrongLetterPosition.removeAll(matchesIncorrectPositionWith(word));

@@ -56,7 +56,7 @@ public class WordleInteractor {
                 .flatMap(Collection::stream)
                 .filter(letterModel -> letterModel.letter.get() == character)
                 .forEach(letterModel ->
-                    letterStatusObjectProperty.set(letterModel.status.get())
+                        letterStatusObjectProperty.set(letterModel.status.get())
                 ));
     }
 }

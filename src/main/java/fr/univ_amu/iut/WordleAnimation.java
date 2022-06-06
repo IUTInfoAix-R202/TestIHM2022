@@ -44,7 +44,7 @@ public class WordleAnimation {
     }
 
     public static void wiggleRow(Node node) {
-        node.setTranslateX(-5.0);
+        node.setTranslateX(- 5.0);
         TranslateTransition transition = new TranslateTransition(Duration.millis(50.0), node);
         transition.setByX(10);
         transition.setCycleCount(6);

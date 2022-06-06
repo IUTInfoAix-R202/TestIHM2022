@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class WordleData {
     List<String> solutions =
