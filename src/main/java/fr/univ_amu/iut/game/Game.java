@@ -1,4 +1,4 @@
-package fr.univ_amu.iut;
+package fr.univ_amu.iut.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ public class Game {
     private final Word winnerWord;
 
     public Game(Dictionary dictionary, Word winnerWord) {
-        if(!dictionary.includesWord(winnerWord))
+        if (! dictionary.includesWord(winnerWord))
             throw new IllegalArgumentException("Winner word must be in dictionary");
         this.dictionary = dictionary;
         this.winnerWord = winnerWord;
@@ -24,8 +24,8 @@ public class Game {
     }
 
     public void addtry(Word word) {
-        if(dictionary != null && !dictionary.includesWord(word))
-            throw new IllegalArgumentException(word+ " is not an english word");
+        if (dictionary != null && ! dictionary.includesWord(word))
+            throw new IllegalArgumentException(word + " is not an english word");
 
         wordsTried.add(word);
     }

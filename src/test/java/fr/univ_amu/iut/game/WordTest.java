@@ -1,17 +1,18 @@
-package fr.univ_amu.iut;
+package fr.univ_amu.iut.game;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class WordTest {
 
     @Test
-    void testThatValidWordLettersAreValid(){
+    void testThatValidWordLettersAreValid() {
         Word wordleWord = new Word("valid");
-        assertThat(wordleWord.letters()).isEqualTo(new char[]{'v', 'a', 'l', 'i', 'd'});
+        assertThat(wordleWord.letters()).isEqualTo(new char[]{'V', 'A', 'L', 'I', 'D'});
     }
 
     @Test
@@ -27,13 +28,13 @@ class WordTest {
     }
 
     @Test
-    void testThatInvalidLettersShouldRaiseException(){
+    void testThatInvalidLettersShouldRaiseException() {
         assertThatThrownBy(() -> new Word("vali*")).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("word contain invalid letters");
     }
 
     @Test
-    void testThatPointShouldRaiseException(){
+    void testThatPointShouldRaiseException() {
         assertThatThrownBy(() -> new Word("v.lid")).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("word contain invalid letters");
     }
@@ -57,7 +58,7 @@ class WordTest {
     public void testThatLettersForGrassWord() {
         Word grassWord = new Word("grass");
 
-        assertThat(grassWord.letters()).isEqualTo(new char[]{'g', 'r', 'a', 's', 's'});
+        assertThat(grassWord.letters()).isEqualTo(new char[]{'G', 'R', 'A', 'S', 'S'});
     }
 
     @Test
@@ -73,7 +74,7 @@ class WordTest {
         Word firstWord = new Word("trees");
         Word secondWord = new Word("table");
 
-        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(1));
+        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(0));
     }
 
     @Test
@@ -81,7 +82,7 @@ class WordTest {
         Word firstWord = new Word("trees");
         Word secondWord = new Word("trees");
 
-        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(1,2,3,4,5));
+        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(0, 1, 2, 3, 4));
     }
 
     @Test
@@ -89,7 +90,7 @@ class WordTest {
         Word firstWord = new Word("trees");
         Word secondWord = new Word("drama");
 
-        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(2));
+        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(1));
         assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of());
     }
 
@@ -98,11 +99,11 @@ class WordTest {
         Word firstWord = new Word("alarm");
         Word secondWord = new Word("drama");
 
-        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(3));
-        assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of(1,4,5));
+        assertThat(firstWord.matchesPositionWith(secondWord)).isEqualTo(List.of(2));
+        assertThat(firstWord.matchesIncorrectPositionWith(secondWord)).isEqualTo(List.of(0, 3, 4));
 
-        assertThat(secondWord.matchesPositionWith(firstWord)).isEqualTo(List.of(3));
-        assertThat(secondWord.matchesIncorrectPositionWith(firstWord)).isEqualTo(List.of(2,4,5));
+        assertThat(secondWord.matchesPositionWith(firstWord)).isEqualTo(List.of(2));
+        assertThat(secondWord.matchesIncorrectPositionWith(firstWord)).isEqualTo(List.of(1, 3, 4));
     }
 
 }

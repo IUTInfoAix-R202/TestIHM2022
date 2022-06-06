@@ -1,15 +1,16 @@
-package fr.univ_amu.iut;
+package fr.univ_amu.iut.game;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GameTest {
 
     @Test
-    void testThatEmptyGameHasNoWinner(){
+    void testThatEmptyGameHasNoWinner() {
         Dictionary dictionary = new Dictionary(new Word("happy"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
@@ -17,7 +18,7 @@ class GameTest {
     }
 
     @Test
-    void testThatEmptyGameHasNoWordsTried(){
+    void testThatEmptyGameHasNoWordsTried() {
         Dictionary dictionary = new Dictionary(new Word("happy"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
@@ -25,7 +26,7 @@ class GameTest {
     }
 
     @Test
-    void testThatTryOneWordAndRecordIt(){
+    void testThatTryOneWordAndRecordIt() {
         Dictionary dictionary = new Dictionary(new Word("happy"), new Word("loser"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
@@ -34,7 +35,7 @@ class GameTest {
     }
 
     @Test
-    void testThatTryFourWordsLoses(){
+    void testThatTryFourWordsLoses() {
         Dictionary dictionary = new Dictionary(new Word("happy"), new Word("loser"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
@@ -46,8 +47,8 @@ class GameTest {
     }
 
     @Test
-    void testThatTryFiveWordsLoses(){
-        Dictionary dictionary = new Dictionary(new Word("happy"),new Word("loser"));
+    void testThatTryFiveWordsLoses() {
+        Dictionary dictionary = new Dictionary(new Word("happy"), new Word("loser"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
         game.addtry(new Word("loser"));
@@ -59,7 +60,7 @@ class GameTest {
     }
 
     @Test
-    void testThatGuessesWord(){
+    void testThatGuessesWord() {
         Dictionary dictionary = new Dictionary(new Word("happy"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
@@ -70,18 +71,17 @@ class GameTest {
     }
 
     @Test
-    void testThatTryToPlayInvalid(){
+    void testThatTryToPlayInvalid() {
         Dictionary dictionary = new Dictionary(new Word("happy"));
         Word winnerWord = new Word("happy");
         Game game = new Game(dictionary, winnerWord);
         assertThatThrownBy(() -> game.addtry(new Word("yyyyy"))).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("yyyyy is not an english word");
+                .hasMessageContaining("YYYYY is not an english word");
     }
 
 
-
     @Test
-    void testWinnerWordNotInDictionary(){
+    void testWinnerWordNotInDictionary() {
         Dictionary dictionary = new Dictionary(new Word("happy"));
         Word winnerWord = new Word("heros");
         assertThatThrownBy(() -> new Game(dictionary, winnerWord)).isInstanceOf(IllegalArgumentException.class)

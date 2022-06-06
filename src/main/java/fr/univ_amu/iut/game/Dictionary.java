@@ -1,9 +1,10 @@
-package fr.univ_amu.iut;
+package fr.univ_amu.iut.game;
 
 import java.util.Arrays;
 
 public class Dictionary {
     private final Word[] words;
+
     public Dictionary(Word... words) {
         this.words = words;
     }
