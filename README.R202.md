@@ -44,6 +44,7 @@ L'application définit plusieurs types d'objets :
 - Un objet `WordleRow` est le composant permettant de saisir un mot de 5 lettres.
 - Un objet `LetterBox` est un élément de la grille principale.
 - Un objet `LetterModel` est l'objet qui permet de materialiser l'état d'une case de jeu.
+- Un objet `WordleData` est l'objet qui charge le dictionnaire et fournit les fonctionnalités *"métier"* (voir ci-dessous).
 
 Votre travail dans la suite de ce sujet sera d'écrire pas à pas plusieurs des classes ci-dessus.
 
@@ -116,14 +117,14 @@ public class LetterModel {
 
 ### Exercice 1 - Implémentation de la classe `LetterBox`
 
-La grille de jeu sera constituée de 6 ligne permettant de contenir 5 lettres.
+La grille de jeu sera constituée de 6 lignes permettant de contenir 5 lettres.
 
 1. Écrire la déclaration d'une classe publique `LetterBox`, sous-classe de (étendant) `StackPane`, réduite pour le
    moment à la déclaration de ses variables d'instance :
 
     - `label` de type `Label`, qui permettra d'afficher la lettre contenue dans la case.
 
-    - `letterModel` de type `LetterModel` qui permettra de connaitre l'état de la case.
+    - `letterModel` de type `LetterModel` qui permettra de connaître l'état de la case.
 
 2. Écrire les accesseurs publics `getLabel()`, `getLetterModel()` qui renvoient la donnée membre correspondante.
 
@@ -135,14 +136,14 @@ La grille de jeu sera constituée de 6 ligne permettant de contenir 5 lettres.
    case courante ainsi que son état.
 
 5. Écrire la méthode `void réglerStyle` qui va régler les classes CSS des différents éléments graphiques. Pour ce faire
-   vous devrez utiliser la méthode `getStyleClass()` qui vous retournera la liste des classes CSS associé au nœud. Pour
+   vous devrez utiliser la méthode `getStyleClass()` qui retourne la liste des classes CSS associée au nœud. Pour
    votre objet `this` ajoutez lui la classe `"tile-box"` et pour le label la classe `"tile-letter"`.
 
 6. Écrire la déclaration de la classe CSS `.tile-box` pour que les cases aient une hauteur et une largeur minimale de
    62px ainsi qu'une bordure de 2px.
 
 7. Écrire le constructeur public `LetterBox(LetterModel letterModel)` qui :
-    - Assigne les données membres aux paramètres donnés correspondants.
+    - Assigne la donnée membre au paramètre correspondant.
 
     - Initialise les autres données membres.
 
@@ -155,35 +156,33 @@ La grille de jeu sera constituée de 6 ligne permettant de contenir 5 lettres.
 ### Exercice 2 - Implémentation de la classe `WordleRow`
 
 Cette classe est celle qui permet de gérer les mots saisis par l'utilisateur. Elle permet grâce à un ensemble de
-propriété d'afficher pour chaque proposition les lettres en fonction de leur statut.
+propriétés d'afficher pour chaque proposition les lettres en fonction de leur statut.
 
 1. Écrire la classe `WordleRow` qui dérive de `HBox`. Cette classe aura les données membres privées suivantes :
 
-    - `letterBoxes` est un tableau de case qui permet d'afficher les lettres contenues dans le mot courant.
+    - `letterBoxes` est un tableau de cases qui permet d'afficher les lettres contenues dans le mot courant.
 
-    - `letters` est un tableau de modèle de lettres (classe `LetterModel`) qui conservera l'état de chaque lettre.
+    - `letters` est un tableau de modèles de lettres (classe `LetterModel`) qui conservera l'état de chaque lettre.
 
-    - Une propriété booléenne `wordValidity` qui permettra de savoir si le mot actuellement dans la ligne est valide (*
-      i.e* de longueur 5 et présent dans le dictionnaire).
-
+    - Une propriété booléenne `wordValidity` qui permettra de savoir si le mot actuellement dans la ligne est valide (*i.e* de longueur 5 et présent dans le dictionnaire).
+      
     - Une propriété entière `currentColumn` qui mémorisera l'emplacement de la prochaine lettre à saisir.
-
+    
 2. Écrire la méthode `creerBindings()` qui s'occupe de créer les différents bindings nécessaires. Pour déterminer la
-   validité d'un mot, supposé qui vous disposez de la méthode
-   statique `boolean WordleData.isWordValid( LetterModel[] letters)`. La création du binding peut se faire en utilisant
-   la méthode `Bindings.createBooleanBinding()` qui prend en premier paramètre une expression lambda retournant une
-   valeur booléenne et arguments suivants, la ou les propriétés utilisées dans l'expression.
+   validité d'un mot, supposez que vous disposez de la méthode
+   statique `boolean WordleData.isWordValid(LetterModel[] letters)`. La création du binding peut se faire en utilisant
+   la méthode `Bindings.createBooleanBinding()` qui prend en premier paramètre une expression lambda (sans paramètre) retournant une valeur booléenne et en arguments suivants, la ou les propriétés utilisées dans la lambda.
 3. Écrire la méthode `remplir()` qui s'occupe de remplir les tableaux `letters` et `letterBoxes`.
 4. Écrire la méthode `ajouterListener()` qui ajoute un écouteur d'invalidation sur la propriété `wordValidity` qui
    change la couleur de fond en gris si le dernier mot saisi n'était pas valide.
 5. Écrire le constructeur `WordleRow()` qui initialise toutes les données membres et appelle les
-   méthodes `creerBindings()`, `remplir`, `ajouterListener()`.
+   méthodes `creerBindings()`, `remplir()` et  `ajouterListener()`.
 
 ### Exercice 3 - Implémentation du clavier virtuel
 
 Le clavier visuel permet à l'utilisateur de saisir les lettres dans la grille, de valider sa saisie et de corriger si
 nécessaire. Ce composant est l'élément principal de l'interaction avec l'utilisateur. Il faut en plus de sa capacité à
-capturer les saisis qu'il puisse être lié avec l'object `WordleRow` courant.
+capturer les saisies qu'il puisse être lié avec l'object `WordleRow` courant.
 
 Le clavier virtuel sera constitué de 3 lignes. La dernière contiendra une touche `"Enter"` et une touche `"Backspace"`.
 Chacune des touches devra réagir au click pour enregistrer une saisie.
@@ -191,13 +190,13 @@ Chacune des touches devra réagir au click pour enregistrer une saisie.
 1. Écrire la déclaration d'une classe publique `VirtualKeyboard`, sous-classe de (étendant) `VBox`, réduite pour le
    moment à la déclaration de ses variables d'instance :
     - `keystrokeConsumer` de type `Consumer<Character>` qui permet de mémoriser une expression lambda qui prend en
-      paramètre un caractère. Cette lambda sera utilisé pour récupérer la saisie de l'utilisateur.
+      paramètre un caractère. Cette lambda sera utilisée pour récupérer la saisie de l'utilisateur.
 
-    - `enterHandler` de type `Runnable`. Elle permettra de mémoriser l'expression lambda sans argument qui sera appelé
+    - `enterHandler` de type `Runnable`. Elle permettra de mémoriser l'expression lambda sans argument qui sera appelée
       lorsque l'utilisateur actionnera la touche `"Enter"`.
 
     - `backspaceHandler` de type `Runnable`. Elle permettra de mémoriser l'expression lambda sans argument qui sera
-      appelé lorsque l'utilisateur actionnera la touche `"Backspace"`.
+      appelée lorsque l'utilisateur actionnera la touche `"Backspace"`.
 
     - `alphabet` de type `Map<Character, ObjectProperty<LetterStatus>>` est un conteneur associatif qui mémorisera à
       chaque instant le status de chaque lettre de l'alphabet. Cet objet sera utilisé pour modifier la couleur des
@@ -207,17 +206,16 @@ Chacune des touches devra réagir au click pour enregistrer une saisie.
    texte la chaine `text`; fait en sorte que la largeur minimum du bouton soit 44.0 et la hauteur, 58.0; que la classe
    CSS associée soit `"key-button"`.
 3. Écrire la méthode `Button createLetterButton(char letter)` qui va créer une touche de clavier normale. Créer un
-   bouton en utilisant `createButton` avec la lettre comme texte. Ajouter un écouteur de click souris avec la
+   bouton en utilisant `createButton` avec la lettre comme texte. Ajouter un écouteur de clic souris avec la
    méthode `button.setOnMouseClicked` en lui passant en paramètre la donnée membre voulue.
 4. De même, écrire les méthodes `Button createBackspaceKey()` et `Button createEnterKey()` qui s'occupent de créer les
    touches `"Enter"` et `"Backspace"`.
 5. Écrire la
    méthode `HBox createRow(List<Character> letters, double leftPadding, boolean includeEnter, boolean includeBackspace)`
    qui s'occupe de créer une ligne du clavier en utilisant les méthodes précédemment écrites. Ajouter un espacement à
-   gauche de `letfPadding` (penser à `setPadding` et à la classe `Inset`).
+   gauche de `letfPadding` (penser à `setPadding` et à la classe `Insets`).
 6. Écrire le
-   constructeur `VirtualKeyboard(Consumer<Character> keystrokeConsumer, Runnable enterHandler, Runnable backspaceHandler, Map<Character, ObjectProperty<LetterStatus>> alphabet)`
-   . Qui s'occupe d'initialiser les données membres et de créer les trois lignes du clavier avant de les ajouter à la
+   constructeur `VirtualKeyboard(Consumer<Character> keystrokeConsumer, Runnable enterHandler, Runnable backspaceHandler, Map<Character, ObjectProperty<LetterStatus>> alphabet)` qui s'occupe d'initialiser les données membres et de créer les trois lignes du clavier avant de les ajouter à la
    liste des enfants de la classe (avec `getChildren()` et `addAll()`). Vous supposerez disposer des données membres
    suivantes :
 
@@ -236,14 +234,14 @@ vue principale et de l'ajouter à la scène.
 
 
 2. Écrire la méthode `public void start(Stage primaryStage)`. Elle devra :
-    - Modifier le titre de la fenêtre en "Lights Out".
+    - Modifier le titre de la fenêtre en "Wordle".
 
-    - Créer un objet `loader` du type `FXMLLoader` et charger la `VBox` principal à partir du fichier `WordleView.fxml`.
+    - Créer un objet `loader` du type `FXMLLoader` et charger la `VBox` principale à partir du fichier `WordleView.fxml`.
 
     - Récupérer le contrôleur du type `WordleController` avec la méthode `getController()` du `loader`.
 
     - Appeler la méthode `setStageAndSetupListeners()` de la classe `WordleController` qui rajoutera l'écouteur
-      d’évènement de fermeture de la fenêtre principale.
+      d’événement de fermeture de la fenêtre principale.
 
     - Ajouter la `VBox` comme racine du graphe de scène.
 
