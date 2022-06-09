@@ -1,4 +1,4 @@
-## Test d'Artisanat logiciel et qualité de développement
+# Test d'Artisanat logiciel et qualité de développement
 
 ### Test du jeudi 9 juin 2022 – Durée 2 heures – Documents autorisés
 
@@ -11,7 +11,7 @@ Wordle rencontre un succès immédiat dans sa version en anglais. Il est rapidem
 dans d'autres versions. L'originalité du jeu tient dans le fait qu'une seule énigme commune à tous les joueurs est
 proposée chaque journée.
 
-![wordle exemple](src/main/resources/assets/wordle_exemple.png)
+![](src/main/resources/assets/wordle_exemple.png)
 
 ### Description du jeu
 
@@ -25,7 +25,7 @@ des lettres bien placées et mal placées) afin de la partager.
 
 L'IHM pourrait ressembler à la fenêtre suivante :
 
-![wordle_screenshot](src/main/resources/assets/wordle_screenshot.png)
+![](src/main/resources/assets/wordle_screenshot.png)
 
 ### Travail à réaliser
 
@@ -45,8 +45,6 @@ Votre travail dans la suite de ce sujet sera d'écrire pas à pas les classes ci
 En plus de ces classes, il existe aussi une énumération `LetterStatus` qui permet d'associer à chaque lettre un état qui sera utile pour le développement de l'IHM. 
 Cette énumération vous est donnée ci-après : 
 ```java
-package fr.univ_amu.iut.game;
-
 public enum LetterStatus {
     EMPTY, UNLOCKED, WRONG, PRESENT, CORRECT
 }
@@ -58,96 +56,103 @@ Un mot est le concept de base du jeu Wordle. Dans la version que l'on a choisi d
 
 1. Écrire la déclaration minimale de la classe `Word` (ainsi que le constructeur et la méthode `letters()`) permettant de faire passer le test unitaire suivant : 
 
-```java 
-@Test
-void testThatValidWordLettersAreValid() {
-    Word wordleWord = new Word("valid");
-    assertThat(wordleWord.letters()).isEqualTo(new char[]{'V', 'A', 'L', 'I', 'D'});
-}
-```
+   ```java 
+   @Test
+   void testThatValidWordLettersAreValid() {
+       Word wordleWord = new Word("valid");
+       assertThat(wordleWord.letters())
+         .isEqualTo(new char[]{'V', 'A', 'L', 'I', 'D'});
+   }
+   ```
 2. Écrire le code à rajouter au constructeur précédent pour gérer les mots n'ayant pas le bon nombre de lettres. Votre code devra permettre de faire passer les tests suivants :
 
-```java
-@Test
-void testThatFewWordLettersShouldRaiseException() {
-    assertThatThrownBy(() -> new Word("vali")).isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Too few letters. Should be 5");
-}
-
-@Test
-void testThatTooManyWordLettersShouldRaiseException() {
-    assertThatThrownBy(() -> new Word("toolong")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Too many letters. Should be 5");
-}
-```
+   ```java
+   @Test
+   void testThatFewWordLettersShouldRaiseException() {
+       assertThatThrownBy(() -> new Word("vali"))
+           .isInstanceOf(IllegalArgumentException.class)
+               .hasMessageContaining("Too few letters. Should be 5");
+   }
+   
+   @Test
+   void testThatTooManyWordLettersShouldRaiseException() {
+       assertThatThrownBy(() -> new Word("toolong"))
+           .isInstanceOf(IllegalArgumentException.class)
+           .hasMessageContaining("Too many letters. Should be 5");
+   }
+   ```
 
 3. En supposant que vous disposez de la méthode `void hasOnlyValidLetters(String word)` qui s'occupe de vérifier si un mot n'est composé que de caractères alphabétiques et que l'appel à cette méthode est rajouté au constructeur, écrire les tests `testThatInvalidLettersShouldRaiseException()` et `testThatPointShouldRaiseException()`. Voici l'implémentation de la méthode `hasOnlyValidLetters` :
-    ```java
-    private void hasOnlyValidLetters(String word) {
-        if (! word.matches("[a-zA-Z]*"))
-            throw new IllegalArgumentException("word contains invalid letters");
-    }
-    ```
+   ```java
+   private void hasOnlyValidLetters(String word) {
+       if (! word.matches("[a-zA-Z]*"))
+           throw new IllegalArgumentException("word contains invalid letters");
+   }
+   ```
 4. Écrire la méthode `List<Integer> matchesCorrectPositionsWith(Word)` qui identifie les lettres bien placées dans un mot. Le mot passé en paramètre est le mot à deviner. Les tests suivants, vous montrent plusieurs exemples d'utilisation de cette méthode :
-```java
-@Test
-public void testThatTwoWordHasNoMatch() {
-   Word firstWord = new Word("trees");
-   Word secondWord = new Word("valid");
-   assertThat(firstWord.matchesCorrectPositionsWith(secondWord)).isEqualTo(List.of());
-}
-@Test
-public void testThatMatchesFirstLetter() {
-    Word firstWord = new Word("trees");
-    Word secondWord = new Word("table");
-    assertThat(firstWord.matchesCorrectPositionsWith(secondWord)).isEqualTo(List.of(0));
-}
-@Test
-public void testThatMatchesAllLetters() {
-    Word firstWord = new Word("trees");
-    Word secondWord = new Word("trees");
-    assertThat(firstWord.matchesCorrectPositionsWith(secondWord)).isEqualTo(List.of(0, 1, 2, 3, 4));
-}
-```
+   ```java
+   @Test
+   public void testThatTwoWordHasNoMatch() {
+      Word firstWord = new Word("trees");
+      Word secondWord = new Word("valid");
+      assertThat(firstWord.matchesCorrectPositionsWith(secondWord))
+           .isEqualTo(List.of());
+   }
+   @Test
+   public void testThatMatchesFirstLetter() {
+       Word firstWord = new Word("trees");
+       Word secondWord = new Word("table");
+       assertThat(firstWord.matchesCorrectPositionsWith(secondWord))
+           .isEqualTo(List.of(0));
+   }
+   @Test
+   public void testThatMatchesAllLetters() {
+       Word firstWord = new Word("trees");
+       Word secondWord = new Word("trees");
+       assertThat(firstWord.matchesCorrectPositionsWith(secondWord))
+           .isEqualTo(List.of(0, 1, 2, 3, 4));
+   }
+   ```
 5. En supposant disposer de la méthode qui identifie les lettres présentes mais mal placées `List<Integer>  matchesIncorrectPositionsWith(Word)`, écrire le test qui compare le mot "alarm" avec le mot "drama".
 
 ### Exercice 2 - Implémentation de la classe `Dictionary`
 Le dictionnaire permet de reconnaître un mot valide. Si un utilisateur propose un mot qui n'existe pas dans le dictionnaire, le mot ne devra pas être accepté par le jeu.
 
 1. Écrire la déclaration minimale de la classe `Dictionary` permettant de faire passer les tests unitaires suivants :
-```java
-@Test
-void testThatEmptyDictionaryHasNoWords() {
-    Dictionary dictionary = new Dictionary();
-    assertThat(dictionary.wordsCount()).isEqualTo(0);
-}
-
-@Test
-void testThatSingleDictionaryReturns1AsCount() {
-    Dictionary dictionary = new Dictionary(new Word("happy"));
-    assertThat(dictionary.wordsCount()).isEqualTo(1);
-}
-```
+   ```java
+   @Test
+   void testThatEmptyDictionaryHasNoWords() {
+       Dictionary dictionary = new Dictionary();
+       assertThat(dictionary.wordsCount()).isEqualTo(0);
+   }
+   
+   @Test
+   void testThatSingleDictionaryReturns1AsCount() {
+       Dictionary dictionary = new Dictionary(new Word("happy"));
+       assertThat(dictionary.wordsCount()).isEqualTo(1);
+   }
+   ```
 
 2. Écrire la méthode `includesWord(Word)` qui vérifie si un mot est contenu dans le dictionnaire. Cette méthode doit valider les tests suivants :
-```java
-@Test
-void testThatDictionaryDoesNotIncludeWord() {
-    Dictionary dictionary = new Dictionary(new Word("happy"));
-    assertThat(dictionary.includesWord(new Word("sadly"))).isFalse();
-}
-
-@Test
-void testThatDictionaryIncludesWord() {
-    Dictionary dictionary = new Dictionary(new Word("happy"));
-    assertThat(dictionary.includesWord(new Word("happy"))).isTrue();
-}
-```
+   ```java
+   @Test
+   void testThatDictionaryDoesNotIncludeWord() {
+       Dictionary dictionary = new Dictionary(new Word("happy"));
+       assertThat(dictionary.includesWord(new Word("sadly"))).isFalse();
+   }
+   
+   @Test
+   void testThatDictionaryIncludesWord() {
+       Dictionary dictionary = new Dictionary(new Word("happy"));
+       assertThat(dictionary.includesWord(new Word("happy"))).isTrue();
+   }
+   ```
 3. Jusqu'à présent, les dictionnaires utilisés n'avaient qu'un seul mot. Pour gérer les dictionnaires de taille arbitraire, le constructeur suivant est ajouté : 
-```java
-public Dictionary(Word... words) {
-    this.words = words;
-}
-```
+   ```java
+   public Dictionary(Word... words) {
+       this.words = words;
+   }
+   ```
 Écrire deux tests à ajouter à l'actuelle suite de tests pour vérifier que la classe accepte bien plusieurs mots.
 
 ### Exercice 3 - Implémentation de la classe `Game`
@@ -158,48 +163,51 @@ La classe `Game` permet de matérialiser une partie du jeu Wordle. Elle a donc l
  - `dictionary` du type `Dictionary` est le dictionnaire utilisé pour valider les mots proposés.
  - `winnerWord` du type `Word` est le mot recherché par le joueur.
 2. Écrire le constructeur `public Game(Dictionary dictionary, Word winnerWord)` qui initialise les données membres. Le constructeur devra faire passer le test suivant :
-```java
-@Test
-void testWinnerWordNotInDictionary() {
-    Dictionary dictionary = new Dictionary(new Word("happy"));
-    Word winnerWord = new Word("angry");
-    assertThatThrownBy(() -> new Game(dictionary, winnerWord)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Winner word must be in dictionary");
-}
-```
+   ```java
+   @Test
+   void testWinnerWordNotInDictionary() {
+       Dictionary dictionary = new Dictionary(new Word("happy"));
+       Word winnerWord = new Word("angry");
+       assertThatThrownBy(() -> new Game(dictionary, winnerWord))
+           .isInstanceOf(IllegalArgumentException.class)
+           .hasMessageContaining("Winner word must be in dictionary");
+   }
+   ```
 3. Écrire la méthode `hasWon()` minimale nécessaire pour valider le test suivant :
-```java
-@Test
-void testThatEmptyGameHasNoWinner() {
-    Dictionary dictionary = new Dictionary(new Word("happy"));
-    Word winnerWord = new Word("happy");
-    Game game = new Game(dictionary, winnerWord);
-    assertThat(game.hasWon()).isFalse();
-}
-```
+   ```java
+   @Test
+   void testThatEmptyGameHasNoWinner() {
+       Dictionary dictionary = new Dictionary(new Word("happy"));
+       Word winnerWord = new Word("happy");
+       Game game = new Game(dictionary, winnerWord);
+       assertThat(game.hasWon()).isFalse();
+   }
+   ```
 4. Écrire les méthodes nécessaires pour valider le test suivant:
-```java
-@Test
-void testThatTryOneWordAndRecordIt() {
-    Dictionary dictionary = new Dictionary(new Word("happy"), new Word("loser"));
-    Word winnerWord = new Word("happy");
-    Game game = new Game(dictionary, winnerWord);
-    game.addtry(new Word("loser"));
-    assertThat(game.wordsTried()).isEqualTo(List.of(new Word("loser")));
-}
-```
+   ```java
+   @Test
+   void testThatTryOneWordAndRecordIt() {
+       Dictionary dictionary = new Dictionary(new Word("happy"), 
+            new Word("loser"));
+       Word winnerWord = new Word("happy");
+       Game game = new Game(dictionary, winnerWord);
+       game.addtry(new Word("loser"));
+       assertThat(game.wordsTried()).isEqualTo(List.of(new Word("loser")));
+   }
+   ```
 5. En supposant que l'on dispose de la méthode `hasLost()` qui permet de vérifier si le joueur a perdu, écrire les méthodes de tests `testThatTryFourWordsLoses()` et `testThatTryFiveWordsLoses()`. Ces deux tests permettent de vérifier les deux valeurs possibles de la méthode `hasLost()` en fonction du nombre d'essais.
 6. Écrire la version complète de la méthode `hasWon()` qui valide le test suivant : 
-```java
-@Test
-void testThatGuessesWord() {
-    Dictionary dictionary = new Dictionary(new Word("happy"));
-    Word winnerWord = new Word("happy");
-    Game game = new Game(dictionary, winnerWord);
-    assertThat(game.hasWon()).isFalse();
-    game.addtry(new Word("happy"));
-    assertThat(game.hasWon()).isTrue();
-}
-```
+   ```java
+   @Test
+   void testThatGuessesWord() {
+       Dictionary dictionary = new Dictionary(new Word("happy"));
+       Word winnerWord = new Word("happy");
+       Game game = new Game(dictionary, winnerWord);
+       assertThat(game.hasWon()).isFalse();
+       game.addtry(new Word("happy"));
+       assertThat(game.hasWon()).isTrue();
+   }
+   ```
 
  
 
