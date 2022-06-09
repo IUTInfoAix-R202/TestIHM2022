@@ -54,7 +54,7 @@ puissiez vous y référer si besoin au cours des exercices.
 ### La classe `WordleData`
 
 La classe `WordleData`, s'occupe de charger le dictionnaire et de mettre à disposition l'ensemble des fonctionnalités *"
-métiers"* à l'IHM. Vous reconnaitrez certainement des méthodes que vous avez écrits durant l'examen de R2.03.
+métiers"* à l'IHM. Vous reconnaitrez certainement des méthodes que vous avez écrites durant l'examen de R2.03.
 
 ```java
 public class WordleData {
@@ -95,7 +95,7 @@ public class WordleData {
 
 ### La classe `LetterModel`
 
-Cette classe contient l'état d'une case. Servira de référence aux bindings permettant de garder l'IHM synchronisée.
+Cette classe contient l'état d'une case, elle servira de référence aux bindings permettant de garder l'IHM synchronisée.
 
 ```java
 public class LetterModel {
@@ -170,19 +170,20 @@ propriétés d'afficher pour chaque proposition les lettres en fonction de leur 
     
 2. Écrire la méthode `creerBindings()` qui s'occupe de créer les différents bindings nécessaires. Pour déterminer la
    validité d'un mot, supposez que vous disposez de la méthode
-   statique `boolean WordleData.isWordValid(LetterModel[] letters)`. La création du binding peut se faire en utilisant
-   la méthode `Bindings.createBooleanBinding()` qui prend en premier paramètre une expression lambda (sans paramètre) retournant une valeur booléenne et en arguments suivants, la ou les propriétés utilisées dans la lambda.
+   statique `boolean WordleData.isWordValid( LetterModel[] letters)`. La création du binding peut se faire en utilisant
+   la méthode `Bindings.createBooleanBinding()` qui prend en premier paramètre une expression lambda retournant une
+   valeur booléenne et en arguments suivants, la ou les propriétés utilisées dans l'expression.
 3. Écrire la méthode `remplir()` qui s'occupe de remplir les tableaux `letters` et `letterBoxes`.
 4. Écrire la méthode `ajouterListener()` qui ajoute un écouteur d'invalidation sur la propriété `wordValidity` qui
    change la couleur de fond en gris si le dernier mot saisi n'était pas valide.
 5. Écrire le constructeur `WordleRow()` qui initialise toutes les données membres et appelle les
-   méthodes `creerBindings()`, `remplir()` et  `ajouterListener()`.
+   méthodes `creerBindings()`, `remplir`, `ajouterListener()`.
 
 ### Exercice 3 - Implémentation du clavier virtuel
 
 Le clavier visuel permet à l'utilisateur de saisir les lettres dans la grille, de valider sa saisie et de corriger si
 nécessaire. Ce composant est l'élément principal de l'interaction avec l'utilisateur. Il faut en plus de sa capacité à
-capturer les saisies qu'il puisse être lié avec l'object `WordleRow` courant.
+capturer les saisies, qu'il puisse être lié avec l'object `WordleRow` courant.
 
 Le clavier virtuel sera constitué de 3 lignes. La dernière contiendra une touche `"Enter"` et une touche `"Backspace"`.
 Chacune des touches devra réagir au click pour enregistrer une saisie.
@@ -199,11 +200,11 @@ Chacune des touches devra réagir au click pour enregistrer une saisie.
       appelée lorsque l'utilisateur actionnera la touche `"Backspace"`.
 
     - `alphabet` de type `Map<Character, ObjectProperty<LetterStatus>>` est un conteneur associatif qui mémorisera à
-      chaque instant le status de chaque lettre de l'alphabet. Cet objet sera utilisé pour modifier la couleur des
+      chaque instant le statut de chaque lettre de l'alphabet. Cet objet sera utilisé pour modifier la couleur des
       touches du clavier au fur et à mesure des essais de l'utilisateur.
 
-2. Écrire la méthode `Button createButton(String text)` qui s'occupe de créer un objet `Button`; de lui donner pour
-   texte la chaine `text`; fait en sorte que la largeur minimum du bouton soit 44.0 et la hauteur, 58.0; que la classe
+2. Écrire la méthode `Button createButton(String text)` qui s'occupe  de créer un objet `Button`; de lui donner pour
+   texte la chaine `text`; et de faire en sorte que la largeur minimum du bouton soit 44.0 et la hauteur, 58.0; que la classe
    CSS associée soit `"key-button"`.
 3. Écrire la méthode `Button createLetterButton(char letter)` qui va créer une touche de clavier normale. Créer un
    bouton en utilisant `createButton` avec la lettre comme texte. Ajouter un écouteur de clic souris avec la
@@ -215,7 +216,8 @@ Chacune des touches devra réagir au click pour enregistrer une saisie.
    qui s'occupe de créer une ligne du clavier en utilisant les méthodes précédemment écrites. Ajouter un espacement à
    gauche de `letfPadding` (penser à `setPadding` et à la classe `Insets`).
 6. Écrire le
-   constructeur `VirtualKeyboard(Consumer<Character> keystrokeConsumer, Runnable enterHandler, Runnable backspaceHandler, Map<Character, ObjectProperty<LetterStatus>> alphabet)` qui s'occupe d'initialiser les données membres et de créer les trois lignes du clavier avant de les ajouter à la
+   constructeur `VirtualKeyboard(Consumer<Character> keystrokeConsumer, Runnable enterHandler, Runnable backspaceHandler, Map<Character, ObjectProperty<LetterStatus>> alphabet)`
+   . Il s'occupe d'initialiser les données membres et de créer les trois lignes du clavier avant de les ajouter à la
    liste des enfants de la classe (avec `getChildren()` et `addAll()`). Vous supposerez disposer des données membres
    suivantes :
 
